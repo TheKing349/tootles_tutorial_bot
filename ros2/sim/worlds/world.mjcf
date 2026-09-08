@@ -3,6 +3,8 @@
   <compiler angle="radian" />
   <option timestep="0.002" gravity="0 0 -9.81" />
   <worldbody>
+    <light name="sun" directional="true" pos="0 0 10" dir="-0.5 0.1 -0.9"
+      diffuse="0.4 0.4 0.4" specular="0.1 0.1 0.1" />
     <body name="ground_plane" pos="0 0 0">
       <inertial mass="1" pos="0 0 0" diaginertia="1 1 1" />
       <geom type="plane" size="100 100 0.1" friction="0.01 0.01 0.01" />
