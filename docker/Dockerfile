@@ -113,6 +113,8 @@ RUN wget -O /etc/apt/sources.list.d/VirtualGL.list https://raw.githubusercontent
 
 RUN apt-get update && apt-get install -y --no-install-recommends virtualgl
 
+RUN apt-get update && apt-get upgrade -y
+
 #################### USER SETUP ####################
 ARG USERNAME=ubuntu
 ARG USER_UID=1000
