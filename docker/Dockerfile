@@ -84,8 +84,8 @@ RUN --mount=type=cache,target=/var/cache/apt \
     # Simulation
     ros-${ROS_DISTRO}-ros-gz \
     ros-${ROS_DISTRO}-gz-ros2-control \
-    ros-${ROS_DISTRO}-gz-ros2-control \
     ros-${ROS_DISTRO}-mujoco-ros2-control \
+    ros-${ROS_DISTRO}-mujoco-3d-lidar \
     # Remove this one later
     ros-${ROS_DISTRO}-mujoco-ros2-control-demos
 
