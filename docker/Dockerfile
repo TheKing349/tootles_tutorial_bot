@@ -83,12 +83,16 @@ RUN --mount=type=cache,target=/var/cache/apt \
     ros-${ROS_DISTRO}-depth-image-proc \
     # Simulation
     ros-${ROS_DISTRO}-ros-gz \
-    ros-${ROS_DISTRO}-gz-ros2-control
+    ros-${ROS_DISTRO}-gz-ros2-control \
+    ros-${ROS_DISTRO}-mujoco-ros2-control \
+    ros-${ROS_DISTRO}-mujoco-3d-lidar \
+    # Remove this one later
+    ros-${ROS_DISTRO}-mujoco-ros2-control-demos
 
 #################### CTRE PHOENIX ####################
 RUN curl -s --compressed -o /usr/share/keyrings/ctr-pubkey.gpg "https://deb.ctr-electronics.com/ctr-pubkey.gpg" && \
     curl -s --compressed -o /etc/apt/sources.list.d/ctr2026.list "https://deb.ctr-electronics.com/ctr2026.list" && \
-    sed -i 's/signed-by=/arch=amd64 signed-by=/' /etc/apt/sources.list.d/ctr2026.list
+    sed -i "s/signed-by=/arch=$(dpkg --print-architecture) signed-by=/" /etc/apt/sources.list.d/ctr2026.list
 
 # Cache for faster rebuilds
 RUN --mount=type=cache,target=/var/cache/apt \
@@ -101,6 +105,15 @@ RUN CTRE_LIB_PATH=$(dirname $(find /usr -name "libCTRE_Phoenix6.so" | head -n 1)
     echo "Found Phoenix6 at: $CTRE_LIB_PATH" && \
     echo "$CTRE_LIB_PATH" > /etc/ld.so.conf.d/ctre.conf && \
     ldconfig
+
+#################### VirtualGL ####################
+RUN wget -q -O- https://packagecloud.io/dcommander/virtualgl/gpgkey | \
+  gpg --dearmor >/etc/apt/trusted.gpg.d/VirtualGL.gpg
+RUN wget -O /etc/apt/sources.list.d/VirtualGL.list https://raw.githubusercontent.com/VirtualGL/repo/main/VirtualGL.list
+
+RUN apt-get update && apt-get install -y --no-install-recommends virtualgl
+
+RUN apt-get update && apt-get upgrade -y
 
 #################### USER SETUP ####################
 ARG USERNAME=ubuntu

@@ -12,10 +12,8 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        # `*.*` means all files/folders with any name/extension
         (os.path.join("share", package_name, "urdf"), glob("urdf/*")),
-        (os.path.join("share", package_name, "meshes"), glob("meshes/*")),
-        # need to explicitly traverse all subfolders in worlds otherwise colcon errors out
-        (os.path.join("share", package_name, "worlds"), glob("worlds/*/*/*")),  
     ],
     install_requires=['setuptools'],
     zip_safe=True,
