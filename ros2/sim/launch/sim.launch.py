@@ -36,9 +36,16 @@ def generate_launch_description():
         launch_arguments={"world": world}.items(),
     )
 
+    nav2 = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            PathJoinSubstitution([FindPackageShare("bringup"), "launch", "nav2.launch.py"])
+        )
+    )
+
     return LaunchDescription([
         use_gazebo_arg,
         world_arg,
         gazebo,
         mujoco,
+        nav2,
     ])
